@@ -2,17 +2,7 @@ pipeline {
 
     agent any
 
-    tools {
-
-    }
-
     stages {
-
-        stage('check env') {
-            steps {
-            }
-        }
-
         stage('clean') {
             steps {
                 sh "chmod +x mvnw"
