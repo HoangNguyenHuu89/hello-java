@@ -2,20 +2,25 @@ pipeline {
 
     agent any
 
-    stages {
-        stage('clone') {
-            steps {
-               git branch: 'main', url: 'https://github.com/HoangNguyenHuu89/hello-java.git'
-            }
-        }
+    tools {
+            jdk 'openjdk-21.0.1'
+    }
 
-        stage('build docker') {
+    stages {
+         stage('check env') {
             steps {
-               withDockerRegistry(credentialsId: 'docker-test', url: 'https://index.docker.io/v1/') {
-                   sh 'docker build -t hoangnh8997/test-docker .'
-                   sh 'docker push  hoangnh8997/test-docker .'
-               }
+                sh "java -version"
+                sh "docker -v"
+                sh "helm version"
             }
-        }
+         }
+
+         stage('check env') {
+             steps {
+                 sh "java -version"
+                 sh "docker -v"
+                 sh "helm version"
+             }
+         }
     }
 }
