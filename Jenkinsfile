@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    states {
+    stages {
         stage('Clone') {
             steps {
                 git 'https://github.com/HoangNguyenHuu89/hello-java.git'
