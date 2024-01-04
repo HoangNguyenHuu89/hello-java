@@ -1,9 +1,32 @@
 pipeline {
+
     agent any
+
+    tools {
+        jdk 'openjdk-21.0.1'
+    }
+
     stages {
-        stage('Clone') {
+
+        stage('check env') {
             steps {
-                git 'https://github.com/HoangNguyenHuu89/hello-java.git'
+                sh "java -version"
+                sh "docker -v"
+                sh "helm version"
+            }
+        }
+
+        stage('clean') {
+            steps {
+                sh "chmod +x mvnw"
+                sh "./mvnw clean"
+            }
+        }
+
+        stage('build application') {
+            steps {
+                sh "./mvnw verify -Pprod -DskipTests"
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }
     }
