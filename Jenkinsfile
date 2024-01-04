@@ -3,17 +3,18 @@ pipeline {
     agent any
 
     stages {
-        stage('clean') {
+        stage('clone') {
             steps {
-                sh "chmod +x mvnw"
-                sh "./mvnw clean"
+               git branch: 'main', url: 'https://github.com/HoangNguyenHuu89/hello-java.git'
             }
         }
 
-        stage('build application') {
+        stage('build docker') {
             steps {
-                sh "./mvnw verify -Pprod -DskipTests"
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+               withDockerRegistry(credentialsId: 'docker-hub', url: ' https://index.docker.io/v1/') {
+                   sh 'docker build -t hoangnh89/test-docker .'
+                   sh 'docker push  hoangnh89/test-docker .'
+               }
             }
         }
     }
