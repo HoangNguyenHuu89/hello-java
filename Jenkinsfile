@@ -3,7 +3,7 @@ pipeline {
     states {
         stage('Clone') {
             steps {
-                git https://github.com/HoangNguyenHuu89/hello-java.git
+                git 'https://github.com/HoangNguyenHuu89/hello-java.git'
             }
         }
     }
