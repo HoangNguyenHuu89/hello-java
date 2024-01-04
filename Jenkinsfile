@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 pipeline {
 
     agent any
@@ -7,6 +8,7 @@ pipeline {
     }
 
     stages {
+
         stage('check env') {
             steps {
                 sh "java -version"
@@ -18,7 +20,14 @@ pipeline {
         stage('clean') {
             steps {
                 sh "chmod +x mvnw"
-                 sh "./mvnw clean"
+                sh "./mvnw clean"
+            }
+        }
+
+        stage('build application') {
+            steps {
+                sh "./mvnw verify -Pprod -DskipTests"
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }
     }
