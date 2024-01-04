@@ -7,20 +7,19 @@ pipeline {
     }
 
     stages {
-         stage('check env') {
+        stage('check env') {
             steps {
                 sh "java -version"
                 sh "docker -v"
                 sh "helm version"
             }
-         }
+        }
 
-         stage('check env') {
-             steps {
-                 sh "java -version"
-                 sh "docker -v"
-                 sh "helm version"
-             }
-         }
+        stage('clean') {
+            steps {
+                sh "chmod +x mvnw"
+                 sh "./mvnw clean"
+            }
+        }
     }
 }
